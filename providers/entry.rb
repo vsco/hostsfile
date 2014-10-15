@@ -43,7 +43,7 @@ action :create do
   if hostsfile.content_changed?
     converge_by("Create #{new_resource}") { hostsfile.save }
   else
-    Chef::Log.info "#{new_resource} content already matches - nothing to do."
+    Chef::Log.debug "#{new_resource} content already matches - nothing to do."
   end
 end
 
@@ -51,7 +51,7 @@ end
 # the given IP address. If one exists, this does nothing.
 action :create_if_missing do
   if hostsfile.contains?(new_resource)
-    Chef::Log.info "#{new_resource} already exists - skipping create_if_missing."
+    Chef::Log.debug "#{new_resource} already exists - skipping create_if_missing."
   else
     converge_by("Create #{new_resource} if missing") do
       hostsfile.add(
@@ -86,7 +86,7 @@ action :append do
   if hostsfile.content_changed?
     converge_by("Append #{new_resource}") { hostsfile.save }
   else
-    Chef::Log.info "#{new_resource} content already matches - nothing to do."
+    Chef::Log.debug "#{new_resource} content already matches - nothing to do."
   end
 end
 
@@ -107,10 +107,10 @@ action :update do
     if hostsfile.content_changed?
       converge_by("Update #{new_resource}") { hostsfile.save }
     else
-      Chef::Log.info "#{new_resource} content already matches - nothing to do."
+      Chef::Log.debug "#{new_resource} content already matches - nothing to do."
     end
   else
-    Chef::Log.info "#{new_resource} does not exist - skipping update."
+    Chef::Log.debug "#{new_resource} does not exist - skipping update."
   end
 end
 
@@ -123,7 +123,7 @@ action :remove do
       hostsfile.save
     end
   else
-    Chef::Log.info "#{new_resource} does not exist - skipping remove."
+    Chef::Log.debug "#{new_resource} does not exist - skipping remove."
   end
 end
 
